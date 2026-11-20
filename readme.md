@@ -10,11 +10,11 @@ Lets the controller's ServiceAccount assume an IAM role (IRSA).
 ```bash
 eksctl utils associate-iam-oidc-provider \
   --region us-east-1 \
-  --cluster roboshop \
+  --cluster roboshop-dev \
   --approve
 ```
 
-Verify: `aws eks describe-cluster --name roboshop --query "cluster.identity.oidc.issuer" --output text`
+Verify: `aws eks describe-cluster --name roboshop-dev --query "cluster.identity.oidc.issuer" --output text`
 
 ## 2. Download the IAM policy
 
