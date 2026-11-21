@@ -41,10 +41,10 @@ Binds the `aws-load-balancer-controller` SA to the IAM policy above.
 
 ```bash
 eksctl create iamserviceaccount \
-  --cluster=roboshop \
+  --cluster=roboshop-dev \
   --namespace=kube-system \
   --name=aws-load-balancer-controller \
-  --attach-policy-arn=arn:aws:iam::160885265516:policy/AWSLoadBalancerControllerIAMPolicy \
+  --attach-policy-arn=arn:aws:iam::423937245774:policy/AWSLoadBalancerControllerIAMPolicy \
   --override-existing-serviceaccounts \
   --region us-east-1 \
   --approve
@@ -60,7 +60,7 @@ helm repo update
 
 helm install aws-load-balancer-controller eks/aws-load-balancer-controller \
   -n kube-system \
-  --set clusterName=roboshop \
+  --set clusterName=roboshop-dev \
   --set serviceAccount.create=false \
   --set serviceAccount.name=aws-load-balancer-controller
 ```
