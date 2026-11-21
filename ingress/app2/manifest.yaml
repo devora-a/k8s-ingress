@@ -17,7 +17,7 @@ spec:
         app: app-2
     spec:
       containers:
-      - name: app-
+      - name: app-2
         image: aravinddharla/app2
         ports:
         - containerPort: 80
@@ -38,3 +38,27 @@ spec:
       port: 80 # service port
       targetPort: 80 # container port
 ---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: app-2
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS": 443}]'
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:423937245774:certificate/186faebf-785f-41a8-9ff1-debb48a1712a
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/tags: Environment=dev,Team=test
+    alb.ingress.kubernetes.io/group.name: roboshop
+spec:
+  ingressClassName: alb
+  rules:
+  - host: "app2.arrud.online"
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: app-2
+            port:
+              number: 80
